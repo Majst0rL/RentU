@@ -67,6 +67,7 @@ public class UserController {
         return userRepository.findByFirstNameAndLastName(firstName, lastName);
     }
 
+
     //Register USER
     //@PostMapping("/register")
     //public ResponseEntity<String> registerUser(@RequestBody User newUser) {

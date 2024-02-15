@@ -14,7 +14,6 @@ import java.util.Optional;
 @RequestMapping("/vehicles")
 @CrossOrigin
 public class VehicleController {
-
     private final VehicleRepository vehicleRepository;
 
     @Autowired

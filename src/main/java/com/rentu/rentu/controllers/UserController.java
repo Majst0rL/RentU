@@ -78,5 +78,4 @@ public class UserController {
     //    userRepository.save(newUser);
     //    return ResponseEntity.ok("User registered successfully");
     //}
-
 }

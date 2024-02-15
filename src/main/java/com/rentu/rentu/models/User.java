@@ -12,6 +12,7 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    private String email;
     private Date birthday;
     private Boolean licence;
     private String username;
@@ -19,10 +20,11 @@ public class User {
     private String gender;
     private String userRole;
 
-    public User(String firstName, String lastName, Date birthday, Boolean licence,
+    public User(String firstName, String lastName, String email, Date birthday, Boolean licence,
                 String username, String password, String gender, String userRole) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.birthday = birthday;
         this.licence = licence;
         this.username = username;
@@ -105,5 +107,13 @@ public class User {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

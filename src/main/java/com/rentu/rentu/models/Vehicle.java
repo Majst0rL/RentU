@@ -2,6 +2,8 @@ package com.rentu.rentu.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 public class Vehicle {
     @Id
@@ -93,5 +95,17 @@ public class Vehicle {
 
     public void setPower(int power) {
         this.power = power;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vehicle vehicle)) return false;
+        return year == vehicle.year && Double.compare(pricePerDay, vehicle.pricePerDay) == 0 && power == vehicle.power && Objects.equals(id, vehicle.id) && Objects.equals(manufacturer, vehicle.manufacturer) && Objects.equals(model, vehicle.model) && fuelType == vehicle.fuelType && vehicleType == vehicle.vehicleType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, manufacturer, model, year, pricePerDay, fuelType, vehicleType, power);
     }
 }

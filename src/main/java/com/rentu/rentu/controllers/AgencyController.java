@@ -1,8 +1,10 @@
 package com.rentu.rentu.controllers;
 
 import com.rentu.rentu.dao.AgencyRepository;
+import com.rentu.rentu.dao.LocationRepository;
 import com.rentu.rentu.dao.VehicleRepository;
 import com.rentu.rentu.models.Agency;
+import com.rentu.rentu.models.Location;
 import com.rentu.rentu.models.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +21,13 @@ import java.util.Optional;
 public class AgencyController {
     private final AgencyRepository agencyRepository;
     private final VehicleRepository vehicleRepository;
+    private final LocationRepository locationRepository;
 
     @Autowired
-    public AgencyController(AgencyRepository agencyRepository, VehicleRepository vehicleRepository) {
+    public AgencyController(AgencyRepository agencyRepository, VehicleRepository vehicleRepository, LocationRepository locationRepository) {
         this.agencyRepository = agencyRepository;
         this.vehicleRepository = vehicleRepository;
+        this.locationRepository = locationRepository;
     }
 
     @GetMapping
@@ -39,26 +43,26 @@ public class AgencyController {
 
     @PostMapping
     public ResponseEntity<?> createAgency(@RequestBody Agency agency) {
-        List<Vehicle> existingOrNewVehicles = new ArrayList<>();
+        Location location = agency.getLocation();
+        if (location != null && location.getId() == null) {
+            Location savedLocation = locationRepository.save(location);
+            agency.setLocation(savedLocation);
+        }
 
+        List<Vehicle> existingOrNewVehicles = new ArrayList<>();
         for (Vehicle vehicle : agency.getVehicles()) {
             Optional<Vehicle> optionalExistingVehicle = vehicleRepository.findById(vehicle.getId());
 
             if (optionalExistingVehicle.isPresent()) {
                 existingOrNewVehicles.add(optionalExistingVehicle.get());
             } else {
-                // Return a response indicating that the vehicle with the specified ID is not found
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Vehicle with ID " + vehicle.getId() + " is not in the database yet.");
             }
         }
 
-        // Set the existing or new vehicles to the agency
         agency.setVehicles(existingOrNewVehicles);
-
-        // Save the agency
         Agency createdAgency = agencyRepository.save(agency);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAgency);
     }
 
@@ -68,6 +72,11 @@ public class AgencyController {
             return ResponseEntity.notFound().build();
         }
         updatedAgency.setId(id);
+        Location location = updatedAgency.getLocation();
+        if (location != null && location.getId() == null) {
+            Location savedLocation = locationRepository.save(location);
+            updatedAgency.setLocation(savedLocation);
+        }
         Agency savedAgency = agencyRepository.save(updatedAgency);
         return ResponseEntity.ok(savedAgency);
     }
@@ -79,5 +88,30 @@ public class AgencyController {
         }
         agencyRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/withVehicles")
+    public List<Agency> getAgenciesWithVehicles() {
+        return agencyRepository.findAgenciesWithVehicles();
+    }
+
+    @GetMapping("/vehiclesMoreThan/{numberOfVehicles}")
+    public List<Agency> getAgenciesWithVehiclesMoreThan(@PathVariable("numberOfVehicles") int numberOfVehicles) {
+        return agencyRepository.findAgenciesWithVehiclesMoreThan(numberOfVehicles);
+    }
+
+    @GetMapping("/country/{country}/vehiclesMoreThan/{numberOfVehicles}")
+    public List<Agency> getAgenciesWithCountryAndVehiclesMoreThan(@PathVariable("country") String country, @PathVariable("numberOfVehicles") int numberOfVehicles) {
+        return agencyRepository.findAgenciesWithCountryAndVehiclesMoreThan(country, numberOfVehicles);
+    }
+
+    @GetMapping("/city/{city}/vehiclesMoreThan/{numberOfVehicles}")
+    public List<Agency> getAgenciesWithCityAndVehiclesMoreThan(@PathVariable("city") String city, @PathVariable("numberOfVehicles") int numberOfVehicles) {
+        return agencyRepository.findAgenciesWithCityAndVehiclesMoreThan(city, numberOfVehicles);
+    }
+
+    @GetMapping("/country/{country}/hasVehicleManufacturer/{vehicleManufacturer}")
+    public List<Agency> getAgenciesWithCityAndVehiclesMoreThan(@PathVariable("country") String country, @PathVariable("vehicleManufacturer") String vehicleManufacturer) {
+        return agencyRepository.findAgenciesWithCountryAndVehicleManufacturer(country, vehicleManufacturer);
     }
 }

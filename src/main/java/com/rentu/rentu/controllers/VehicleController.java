@@ -56,4 +56,20 @@ public class VehicleController {
         vehicleRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/pricePerDayLessThan/{pricePerDay}/builtYearLessThan/{year}")
+    public List<Vehicle> getVehicleWithPricePerDayLessThanAndYearLessThan(@PathVariable("pricePerDay") double pricePerDay, @PathVariable("year") int year) {
+        return vehicleRepository.findVehicleWithPricePerDayLessThanAndYearLessThan(pricePerDay, year);
+    }
+
+    @GetMapping("/powerMoreThan/{power}/pricePerDayLessThan/{pricePerDay}/builtYearLessThan/{year}")
+    public List<Vehicle> getVehicleWithPowerMoreThanPricePerDayLessThanAndYearLessThan(@PathVariable("power") int power, @PathVariable("pricePerDay") double pricePerDay, @PathVariable("year") int year) {
+        return vehicleRepository.findVehicleWithPowerMoreThanAndPricePerDayLessThanAndYearLessThan(power, pricePerDay, year);
+    }
+
+    @GetMapping("/manufacturer/{manufacturer}/model/{model}/builtYearLessThan/{year}")
+    public List<Vehicle> getVehicleWithPowerMoreThanPricePerDayLessThanAndYearLessThan(@PathVariable("manufacturer") String manufacturer, @PathVariable("model") String model, @PathVariable("year") int year) {
+        return vehicleRepository.findVehicleWithManufacturerAndModelAndYearLessThan(manufacturer, model, year);
+    }
+
 }

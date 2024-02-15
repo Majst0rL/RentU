@@ -2,6 +2,7 @@ package com.rentu.rentu.models;
 
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Agency {
@@ -9,7 +10,8 @@ public class Agency {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String address;
+    @ManyToOne
+    private Location location;
     @OneToMany
     private List<Vehicle> vehicles;
 
@@ -18,10 +20,10 @@ public class Agency {
     }
 
     // Constructor with parameters
-    public Agency(Long id, String name, String address, List<Vehicle> vehicles) {
+    public Agency(Long id, String name, Location location, List<Vehicle> vehicles) {
         this.id = id;
         this.name = name;
-        this.address = address;
+        this.location = location;
         this.vehicles = vehicles;
     }
 
@@ -42,12 +44,12 @@ public class Agency {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public List<Vehicle> getVehicles() {

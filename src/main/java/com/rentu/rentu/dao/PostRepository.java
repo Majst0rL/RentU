@@ -1,9 +1,10 @@
 package com.rentu.rentu.dao;
+
+import com.rentu.rentu.models.Post;
 import org.springframework.data.repository.CrudRepository;
-import com.rentu.rentu.models.Reservation;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReservationRepository extends CrudRepository<Reservation, Long> {
-}
+public interface PostRepository extends CrudRepository<Post, Long>{
 
+}

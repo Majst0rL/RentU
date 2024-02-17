@@ -12,6 +12,7 @@ public class Post {
     private Vehicle vehicle;
     @ManyToOne
     private Agency agency;
+
     private String description;
 
     public Post(){}
@@ -34,6 +35,7 @@ public class Post {
         this.agency = agency;
     }
 
+
     public Long getId() {
         return id;
     }
@@ -46,4 +48,5 @@ public class Post {
     public Agency getAgency() {
         return agency;
     }
+
 }

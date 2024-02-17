@@ -1,11 +1,15 @@
 package com.rentu.rentu.controllers;
 
+import com.rentu.rentu.models.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.rentu.rentu.models.Reservation;
 import com.rentu.rentu.dao.ReservationRepository;
 import org.springframework.http.HttpStatus;
+
+import com.rentu.rentu.models.User;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -51,5 +55,11 @@ public class ReservationController {
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         reservationRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/findReservations")
+    public ResponseEntity<List<Reservation>> findReservations(@RequestParam(required = false) LocalDate startDate, @RequestParam(required = false) LocalDate endDate, @RequestParam(required = false) Double price, @RequestParam(required = false) User user, @RequestParam(required = false) Vehicle vehicle) {
+        List<Reservation> reservations = reservationRepository.findReservations(startDate, endDate, price, user, vehicle);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 }

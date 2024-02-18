@@ -1,5 +1,6 @@
 package com.rentu.rentu.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -14,8 +15,10 @@ public class Reservation {
     private LocalDate startDate;
     private LocalDate endDate;
     private double price;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    private Agency agency;
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @ManyToOne
@@ -24,7 +27,7 @@ public class Reservation {
 
     public Reservation(LocalDate startDate, LocalDate endDate, User user, Vehicle vehicle) {
         if (!user.getLicence()) {
-            throw new IllegalArgumentException("Uporabnik nima veljavne licence.");
+            throw new IllegalArgumentException("The user does not have a valid driving license");
         }
         this.startDate = startDate;
         this.endDate = endDate;
@@ -39,7 +42,8 @@ public class Reservation {
 
     public double calculatePrice() {
         long days = ChronoUnit.DAYS.between(startDate, endDate);
-        return days * vehicle.getPricePerDay();
+        double price = days * vehicle.getPricePerDay();
+        return price;
     }
 
     //setters and getters
@@ -49,8 +53,8 @@ public class Reservation {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPrice() {
+        this.price = calculatePrice();
     }
     public void setUser(User user) {
         this.user = user;
@@ -77,6 +81,22 @@ public class Reservation {
 
     public Vehicle getVehicle() {
         return vehicle;
+    }
+    @PostLoad
+    public void onPostLoad() {
+        price = calculatePrice();
+    }
+
+    public Agency getAgency() {
+        return agency;
+    }
+
+    public void setAgency(Agency agency) {
+        this.agency = agency;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
 

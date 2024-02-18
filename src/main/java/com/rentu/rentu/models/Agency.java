@@ -1,5 +1,6 @@
 package com.rentu.rentu.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -10,21 +11,26 @@ public class Agency {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String email;
     @ManyToOne
     private Location location;
     @OneToMany
     private List<Vehicle> vehicles;
+    @OneToMany(mappedBy = "agency")
+    @JsonManagedReference
+    private List<Reservation> reservations;
 
     // Default constructor
     public Agency() {
     }
 
     // Constructor with parameters
-    public Agency(Long id, String name, Location location, List<Vehicle> vehicles) {
+    public Agency(Long id, String name, Location location, List<Vehicle> vehicles, String email) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.vehicles = vehicles;
+        this.email = email;
     }
 
     // Getters and setters
@@ -60,4 +66,19 @@ public class Agency {
         this.vehicles = vehicles;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
 }

@@ -2,6 +2,7 @@ package com.rentu.rentu.controllers;
 
 import com.rentu.rentu.dao.UserRepository;
 import com.rentu.rentu.models.User;
+import com.rentu.rentu.models.UserRole;
 import com.rentu.rentu.models.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,17 @@ public class UserController {
         updatedUser.setId(id);
         userRepository.save(updatedUser);
         return ResponseEntity.ok(updatedUser);
+    }
+
+    @PutMapping("/{id}/userRole")
+    public ResponseEntity<User> updateUserRole(@PathVariable("id") Long id, @RequestBody UserRole userRole) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        userOptional.get().setUserRole(userRole);
+        userRepository.save(userOptional.get());
+        return ResponseEntity.ok(userOptional.get());
     }
 
     //DELETE User

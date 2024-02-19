@@ -18,10 +18,10 @@ public class User {
     private String username;
     private String password;
     private String gender;
-    private String userRole;
+    private UserRole userRole;
 
     public User(String firstName, String lastName, String email, Date birthday, Boolean licence,
-                String username, String password, String gender, String userRole) {
+                String username, String password, String gender, UserRole userRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -101,11 +101,11 @@ public class User {
         this.gender = gender;
     }
 
-    public String getUserRole() {
+    public UserRole getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(String userRole) {
+    public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
 

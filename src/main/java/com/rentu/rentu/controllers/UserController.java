@@ -2,6 +2,7 @@ package com.rentu.rentu.controllers;
 
 import com.rentu.rentu.dao.UserRepository;
 import com.rentu.rentu.models.User;
+import com.rentu.rentu.models.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +33,25 @@ public class UserController {
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/login/{username}/{password}")
+    public ResponseEntity<User> login(@PathVariable("username") String username, @PathVariable("password") String password) {
+        User user = userRepository.login(username, password);
+
+        if(user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        return ResponseEntity.ok(user);
+    }
+
     //Create User
     @PostMapping
     public User createUser(@RequestBody User newUser) {
+        return userRepository.save(newUser);
+    }
+
+    @PostMapping("/register")
+    public User registerUser(@RequestBody User newUser) {
         return userRepository.save(newUser);
     }
 

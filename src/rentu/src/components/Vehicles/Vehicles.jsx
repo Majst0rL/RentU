@@ -13,10 +13,14 @@ export default function Vehicles() {
     const [id, setId] = useState(0);
 
     useEffect(() => {
+        getAll();
+    }, []);
+
+    const getAll = () => {
         dataService.getVehicles()
             .then((response) => setVehicles(response.data))
             .catch((error) => console.error("Error fetching data:", error));
-    }, []);
+    }
 
     const createVehicle = (event) => {
         event.preventDefault();
@@ -30,8 +34,9 @@ export default function Vehicles() {
             vehicleType: vehicleType,
             power: power
         };
-        dataService.createVehicle(newVehicle);
-        document.location.reload();
+        dataService.createVehicle(newVehicle).then((result) => {
+            getAll();
+        });
     }
 
     const updateVehicle = (event) => {
@@ -48,13 +53,15 @@ export default function Vehicles() {
             power: power
         };
 
-        dataService.updateVehicle(id, newVehicle);
-        document.location.reload();
+        dataService.updateVehicle(id, newVehicle).then((result) => {
+            getAll();
+        });
     }
 
     const deleteVehicle = (id) => {
-        dataService.deleteVehicle(id);
-        document.location.reload();
+        dataService.deleteVehicle(id).then((result) => {
+            getAll();
+        });
     }
 
     return (

@@ -1,12 +1,14 @@
 
 import React from "react";
+import { Link } from 'react-router-dom';
 
-export default function Navigation({ role }) {
+export default function Navigation() {
   return (
     <nav>
-        <a href="/" className="navbar">Home</a>
-        <a href="/vehicles">Vehicles</a>
-        <a href="/agencies">Agencies</a>
+        <Link to="/">Home</Link>
+        <Link to="/vehicles">Vehicles</Link>
+        <Link to="/agencies">Agencies</Link>
+        <Link to="/users">Users</Link>
         
     </nav>
   );

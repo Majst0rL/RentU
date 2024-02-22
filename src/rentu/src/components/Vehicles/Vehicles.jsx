@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { dataService } from "../../modules/DataService.js";
 import FilteredVehicles from "./FilteredVehicles/FilteredVehicles.jsx";
+import VehicleGraph from "./VehicleGraph/VehicleGraph.jsx";
 
 export default function Vehicles() {
     const [vehicles, setVehicles] = useState([]);
@@ -131,6 +132,9 @@ export default function Vehicles() {
             <br /><br />
             <hr />
             <FilteredVehicles />
+            <br /><br />
+            <hr />
+            <VehicleGraph />
         </div>
     );
 };

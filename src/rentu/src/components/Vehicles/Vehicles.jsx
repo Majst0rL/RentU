@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { dataService } from "../../modules/DataService.js";
 import FilteredVehicles from "./FilteredVehicles/FilteredVehicles.jsx";
 import VehicleGraph from "./VehicleGraph/VehicleGraph.jsx";
+import "./Vehicles.css";
 
 export default function Vehicles() {
     const [vehicles, setVehicles] = useState([]);

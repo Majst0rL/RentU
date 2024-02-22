@@ -137,7 +137,7 @@ export default function Agencies() {
                 <h2>Add vehicle to agency</h2>
                 Agency id: <input type="number" name="agencyId2" value={agencyId} onChange={(e) => { setAgencyId(e.target.value) }} />
                 Vehicle id: <input type="number" name="vehicleId" value={vehicleId} onChange={(e) => { setVehicleId(e.target.value) }} />
-                <input type="submit" value="Update" onClick={addAgencyVehicle} />
+                <input type="submit" value="Add vehicle" onClick={addAgencyVehicle} />
             </form>
 
             <hr />

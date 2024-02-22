@@ -9,6 +9,7 @@ export const dataService = {
   createVehicle: (data) => axios.post(`${backendBaseURL}/vehicles`, data),
   updateVehicle: (id, data) => axios.put(`${backendBaseURL}/vehicles/${id}`, data),
   deleteVehicle: (id) => axios.delete(`${backendBaseURL}/vehicles/${id}`),
+  getFilteredVehicles: (powerMoreThan, pricePerDayLessThan, builtYearLessThan) => axios.get(`${backendBaseURL}/vehicles/powerMoreThan/${powerMoreThan}/pricePerDayLessThan/${pricePerDayLessThan}/builtYearLessThan/${builtYearLessThan}`),
 
   //Agencies
   getAgencies: () => axios.get(`${backendBaseURL}/agencies`),

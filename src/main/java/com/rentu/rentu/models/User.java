@@ -1,5 +1,6 @@
 package com.rentu.rentu.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -18,10 +19,16 @@ public class User {
     private String username;
     private String password;
     private String gender;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role")
     private UserRole userRole;
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    @JsonIgnore
+    private Location location;
 
     public User(String firstName, String lastName, String email, Date birthday, Boolean licence,
-                String username, String password, String gender, UserRole userRole) {
+                String username, String password, String gender, UserRole userRole, Location location) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -31,6 +38,7 @@ public class User {
         this.password = password;
         this.gender = gender;
         this.userRole = userRole;
+        this.location = location;
     }
 
     public User() {
@@ -116,4 +124,8 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Location getLocation() {return location;}
+
+    public void setLocation(Location location) {this.location = location;}
 }

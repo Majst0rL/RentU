@@ -66,5 +66,10 @@ public class LocationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/byUsername")
+    public List<Location> findLocationsByUsers_Username(@RequestParam String username) {
+        List<Location> locations = locationRepository.findLocationsByUsers_Username(username);
+        return locations;
+    }
 }
 

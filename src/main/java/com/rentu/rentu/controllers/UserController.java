@@ -97,6 +97,11 @@ public class UserController {
         return userRepository.findByFirstNameAndLastName(firstName, lastName);
     }
 
+    @GetMapping("/byCity")
+    public List<User> getUsersByCity(@RequestParam String city) {
+        List<User> users = userRepository.findUsersByCity(city);
+        return users;
+    }
 
     //Register USER
     //@PostMapping("/register")

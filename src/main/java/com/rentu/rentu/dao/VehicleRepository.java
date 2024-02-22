@@ -20,4 +20,5 @@ public interface VehicleRepository extends CrudRepository<Vehicle, Long> {
     @Query("SELECT v FROM Vehicle v WHERE v.manufacturer = :manufacturer AND v.model = :model AND v.year < :year")
     List<Vehicle> findVehicleWithManufacturerAndModelAndYearLessThan(@Param("manufacturer") String manufacturer, @Param("model") String model, @Param("year") int year);
 
+
 }

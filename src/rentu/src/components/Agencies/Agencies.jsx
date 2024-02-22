@@ -13,10 +13,14 @@ export default function Agencies() {
     const [vehicleId, setVehicleId] = useState(0);
 
     useEffect(() => {
+        getAll();
+    }, []);
+
+    const getAll = () => {
         dataService.getAgencies()
             .then((response) => setAgencies(response.data))
-            .catch((error) => console.error("Error fetching data:", error));
-    }, []);
+            .catch((error) => console.error("Error fetching data:", error));   
+    }
 
     const createAgency = (event) => {
         event.preventDefault();
@@ -34,8 +38,9 @@ export default function Agencies() {
             reservations: []
         };
 
-        dataService.createAgency(newAgency);
-        document.location.reload();
+        dataService.createAgency(newAgency).then((response) => {
+            getAll();
+        });
     }
 
     const updateAgency = (event) => {
@@ -63,13 +68,15 @@ export default function Agencies() {
             reservations: [...selectedAgency.reservations]
         };
 
-        dataService.updateAgency(agencyId, updatedAgency);
-        document.location.reload();
+        dataService.updateAgency(agencyId, updatedAgency).then((response) => {
+            getAll();
+        });
     }
 
     const deleteAgency = (agencyId) => {
-        dataService.deleteAgency(agencyId);
-        document.location.reload();
+        dataService.deleteAgency(agencyId).then((response) => {
+            getAll();
+        });
     }
 
     const addAgencyVehicle = (event) => {
@@ -91,7 +98,7 @@ export default function Agencies() {
         console.log(JSON.stringify(updatedAgency)); //!
 
         dataService.updateAgency(agencyId, updatedAgency).then((response) => {
-            document.location.reload();
+            getAll()
         }).catch((error) => {
             alert("Error. Possible cause: vehicle id is not correct");
             console.error(error);
@@ -105,8 +112,9 @@ export default function Agencies() {
         // eslint-disable-next-line eqeqeq
         const updatedAgency = { ...selectedAgency, vehicles: selectedAgency.vehicles.filter((vehicle) => (vehicle.id != vehicleId)) }
 
-        dataService.updateAgency(agencyId, updatedAgency);
-        document.location.reload();
+        dataService.updateAgency(agencyId, updatedAgency).then((response) => {
+            getAll();
+        });
     }
 
     return (

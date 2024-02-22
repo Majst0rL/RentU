@@ -2,6 +2,8 @@ package com.rentu.rentu.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Location {
     @Id
@@ -11,15 +13,18 @@ public class Location {
     private int number;
     private String city;
     private String country;
+    @OneToMany(mappedBy = "location")
+    private List<User> users;
 
     public Location() {
     }
 
-    public Location(String street, int number, String city, String country) {
+    public Location(String street, int number, String city, String country, List<User> users) {
         this.street = street;
         this.number = number;
         this.city = city;
         this.country = country;
+        this.users = users;
     }
 
     public Long getId() {
@@ -58,8 +63,10 @@ public class Location {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+    public void setCountry(String country) {this.country = country;}
+
+    public List<User> getUsers() {return users;}
+
+    public void setUsers(List<User> users) {this.users = users;}
 }
 

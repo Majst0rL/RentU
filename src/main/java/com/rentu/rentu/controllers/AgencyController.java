@@ -114,4 +114,9 @@ public class AgencyController {
     public List<Agency> getAgenciesWithCityAndVehiclesMoreThan(@PathVariable("country") String country, @PathVariable("vehicleManufacturer") String vehicleManufacturer) {
         return agencyRepository.findAgenciesWithCountryAndVehicleManufacturer(country, vehicleManufacturer);
     }
+
+    @GetMapping("/{agencyId}/vehicles")
+    public List<Vehicle> getVehiclesByAgency(@PathVariable Long agencyId) {
+        return agencyRepository.getVehiclesByAgency(agencyId);
+    }
 }

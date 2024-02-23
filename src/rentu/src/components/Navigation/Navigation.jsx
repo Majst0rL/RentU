@@ -9,7 +9,7 @@ export default function Navigation() {
         <Link to="/vehicles">Vehicles</Link>
         <Link to="/agencies">Agencies</Link>
         <Link to="/users">Users</Link>
-        
+        <Link to="/emailsender">Subscribe</Link>
     </nav>
   );
 };

@@ -23,6 +23,6 @@ export const dataService = {
   updateUser: (id, data) => axios.put(`${backendBaseURL}/users/updateUser/${id}`, data),
   deleteUser: (id) => axios.delete(`${backendBaseURL}/users/deleteUser/${id}`),
 
-
+  subscribeToNewsletter: (email) => axios.post(`${backendBaseURL}/emailsender/subscribe?email=${email}`),
   
 };
